@@ -1,0 +1,311 @@
+﻿@*@model Tuple<Win.Entities.Model.UserInfo, Win.Entities.Model.UserAdressInformation, List<Win.Entities.Model.Product>, List<Win.Entities.Model.City>>*@
+
+@*@model  Win.AspMvcUI.Models.UserInformationTupleViewModel*@
+
+@model Win.Entities.Dto.UserAdressInformationViewModel
+
+
+@{
+    ViewBag.Title = "Hesap Bilgileri";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script>
+    $(function () {
+        //aynı ajaxmı kullanıcağımdan dolayı ajaxsetup oluştuyorum
+        $.ajaxSetup({
+            type: "post",
+            //url: "/User/CityTownDistrict",//controlerımda gidicek olan yerim
+            url:"adresim",
+            dataType: "json"
+        });
+        $.extend({
+            cityGet: function () {
+                $.ajax({
+                    //datamızı gönderiyoruz
+                    data: { "tip": "cityGet" },
+                    success: function (sonuc) {
+                        //gelen sonucumuz kontrol ediyoruz ona göre selectimze append işlemi gerçekleştiyoruz
+                        if (sonuc.ok) {
+                            SetDDLItem("city", sonuc);
+                        } else {
+                            SetDDLItem("city", sonuc);
+                        }
+                        document.getElementById("city").dispatchEvent(new Event('change'));
+                    }
+                });
+            },
+            townGet: function (cityID) {
+                $.ajax({
+                    //ekstra olarak functionumaza gelen ilID mizi gönderiyoruz
+                    data: { "cityID": cityID, "tip": "townGet" },
+                    success: function (sonuc) {
+                        //bir önceki kayıtları temizliyorum
+                        $("#town option").remove();
+                        if (sonuc.ok) {
+                            //disabled true yapıyorum
+                            $("#town").prop("disabled", false);
+                            SetDDLItem("town", sonuc);
+                        } else {
+                            SetDDLItem("town", sonuc);
+                        }
+                        document.getElementById("town").dispatchEvent(new Event('change'));
+                    }
+                });
+            },
+            districtGet: function (townID) {
+                $.ajax({
+                    //ekstra olarak functionumaza gelen ilID mizi gönderiyoruz
+                    data: { "townID": townID, "tip": "districtGet" },
+                    success: function (sonuc) {
+                        //bir önceki kayıtları temizliyorum
+                        $("#district option").remove();
+                        if (sonuc.ok) {
+                            //disabled true yapıyorum
+                            $("#district").prop("disabled", false);
+                            SetDDLItem("district", sonuc);
+
+                        } else {
+                            SetDDLItem("district", sonuc);
+                        }
+                        document.getElementById("district").dispatchEvent(new Event('change'));
+                    }
+                });
+            },
+            neighborhoodGet: function (districtID) {
+                $.ajax({
+                    data: { "districtID": districtID, "tip": "neighborhoodGet" },
+                    success: function (sonuc) {
+                        $("#neighborhood option").remove();
+                        if (sonuc.ok) {
+                            $("#neighborhood").prop("disabled", false);
+                            SetDDLItem("neighborhood", sonuc);
+                        } else {
+                            SetDDLItem("neighborhood", sonuc);
+                        }
+                    }
+                });
+            }
+        });
+        //ilgetirimizi çalıştıyoruz
+        $.cityGet();
+        //il selectimizde değişiklik olduğunda çalışacak func
+        $("#city").on("change", function () {
+            //seçili olan id alıyoruz
+            var cityID = $(this).val();
+            //seçili olan idmizi ilceGetir'imze gönderiyoruz
+            $.townGet(cityID);
+        });
+        $("#town").on("change", function () {
+            //seçili olan id alıyoruz
+            var townID = $(this).val();
+            //seçili olan idmizi ilceGetir'imze gönderiyoruz
+            $.districtGet(townID);
+        });
+        $("#district").on("change", function () {
+            var districtID = $(this).val();
+            $.neighborhoodGet(districtID);
+        });
+        function SetDDLItem(id, result) {
+            var currentItem = "";
+            if (id == "city") {
+                currentItem = "@Html.Raw(HttpUtility.JavaScriptStringEncode(Model.city))";
+            }
+            else if (id == "town") {
+                currentItem = "@Html.Raw(HttpUtility.JavaScriptStringEncode(Model.town))";
+            }
+            else if (id == "district") {
+                currentItem = "@Html.Raw(HttpUtility.JavaScriptStringEncode(Model.district))";
+            }
+            else if (id == "neighborhood") {
+                currentItem = "@Html.Raw(HttpUtility.JavaScriptStringEncode(Model.neighborhood))";
+            }
+            $.each(result.text, function (index, item) {
+                var optionhtml = '<option value="' + item.Value + '" ';
+                if (currentItem == item.Text) {
+                    optionhtml += 'selected="selected"';
+                }
+                optionhtml +=  '>'+item.Text + '</option>';
+                $("#" + id).append(optionhtml);
+            });
+        }
+    });
+</script>
+
+
+
+<!--================Home Banner Area =================-->
+<section class="banner_area">
+    <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+            <div class="banner_content text-center">
+                <h2>Profil Detayları</h2>
+                <div class="page_link">
+                    <a href="/anasayfa">Ana Sayfa</a>
+                    <a href="/bilgilerim">Profil</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!--================End Home Banner Area =================-->
+<!--================Checkout Area =================-->
+<section class="checkout_area p_120">
+    <div class="container">
+        @*<div class="returning_customer">
+                <div class="check_title">
+                    <h2> buraya uyarı mesajı gelecek adres bilgileri eksik diye</h2>
+                </div>
+            </div>*@
+
+
+
+
+        <div class="billing_details">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h3>İletişim Bilgileri</h3>
+                    <form class="row contact_form" action="/bilgilerimikaydet" method="post">
+                        @Html.AntiForgeryToken()
+                        @*<input type="hidden" value="@Model.Item1.Id" name="Id" />
+                            <input type="hidden" value="@Model.Item2.Id" name="UserID" />*@
+                        <input type="hidden" value="@Model.userInfo.Id" name="Id" />
+                        <input type="hidden" value="@Model.adressInformatin.UserID" name="UserID" />
+
+                        <div class="col-md-4 form-group">
+                            <input id="userAccountPP" class="input" type="hidden" name="PhotoUrl" value="@Model.userInfo.PhotoUrl">
+                            @Html.Partial("/Views/Partial/_UserProfilePhoto.cshtml", new Win.Entities.Model.UserInfo() { PhotoUrl = Model.userInfo.PhotoUrl })
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label style="color:black">Kullanıcı Adı</label>
+                            <input type="text" class="form-control" value="@Model.userInfo.NickName" readonly>
+                            <span class="placeholder" data-placeholder="Kullanıcı Adı"></span>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label style="color:black">Puan</label>
+                            <input type="text" class="form-control" value="@Model.userInfo.Point" readonly>
+                            <span class="placeholder" data-placeholder="Puan"></span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label style="color:black">Ad</label>
+                            <input type="text" class="form-control" id="Name" name="Name" value="@Model.adressInformatin.Name">
+                            <span class="placeholder" data-placeholder="Ad"></span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label style="color:black">Soyad</label>
+                            <input type="text" class="form-control" id="Surname" name="Surname" value="@Model.adressInformatin.Surname">
+                            <span class="placeholder" data-placeholder="Soyad"></span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label style="color:black">Şifre</label>
+                            <input type="password" class="form-control" id="Password" name="Password" value="********">
+                            <span class="placeholder" data-placeholder="Şifre"></span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label style="color:black">E-Mail</label>
+                            <input type="text" class="form-control" id="Email" name="Email" value="@Model.userInfo.Email">
+                            <span class="placeholder" data-placeholder="E-Mail Adresi"></span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label style="color:black">Telefon</label>
+                            <input type="text" class="form-control" maxlength="11" id="Phone" name="Phone" value="@Model.adressInformatin.Phone">
+                            <span class="placeholder" data-placeholder="Telefon Numarası"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label style="color:black">İl</label>
+                            <select class="form-control" name="CityId" id="city"></select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label style="color:black">İlçe</label>
+                            <select class="form-control" name="TownId" id="town">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label style="color:black">Semt</label>
+                            <select class="form-control" name="DistrictId" id="district">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label style="color:black">Mahalle</label>
+                            <select class="form-control" name="NeighborhoodId" id="neighborhood">
+                            </select>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label style="color:black">Adres</label>
+                            <input type="text" class="form-control" id="Adress" name="Adress" value="@Model.adressInformatin.Adress">
+                            <span class="placeholder" data-placeholder="Ürünün Gönderileceği Adres Bilgisi"></span>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label style="color:black">Not</label>
+                            <textarea class="form-control" name="Note" id="Note" rows="2" placeholder="Bize iletmek istediğiniz her şeyi buraya yazabilirsiniz">@Model.adressInformatin.Note</textarea>
+                        </div>
+                        <div class="col-md-12 form-group" style="text-align-last:center">
+                            @*<a class="main_btn" href="#">Bilgileri Kaydet</a>*@
+                            <button type="submit" class="main_btn">Bilgileri Kaydet</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-4">
+                    <div class="order_box">
+                        <h2>Aldığım Ürünler</h2>
+                        <ul class="list">
+                            @if (Model.product == null || Model.product.Count <= 0)
+                            {
+                                <li><i>Hiç ürününüz bulunmamaktadır.</i></li>
+                            }
+                            else
+                            {
+                                foreach (var product in Model.product)
+                                {
+                                    <li><a href="/siparistakip/@product.Id">@((product.ProductName.Length > 30) ? product.ProductName.Substring(0, 30) + "..." : product.ProductName)</a></li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                    <div class="order_box">
+                        <h2>Favori Ürünlerim</h2>
+                        <ul class="list">
+                            @foreach (var product in Model.myFavoriteProducts)
+                            {
+                                <li><a href="@Url.Action("Details","Product",new { id = product.Id , url =Win.AspMvcUI.Helpers.Util.UrlExtension.FriendlyUrl(product.Name)})">@((product.Name.Length > 30) ? product.Name.Substring(0, 30) + "..." : product.Name)</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Checkout Area =================-->
+
+
+
+
+@section JavaScripts{
+    <script src="~/Content/js/SearchScript.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="~/Content/js/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/js/popper.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/stellar.js"></script>
+    <script src="~/Content/vendors/lightbox/simpleLightbox.min.js"></script>
+    <script src="~/Content/vendors/nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="~/Content/vendors/isotope/imagesloaded.pkgd.min.js"></script>
+    <script src="~/Content/vendors/isotope/isotope-min.js"></script>
+    <script src="~/Content/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="~/Content/js/jquery.ajaxchimp.min.js"></script>
+    <script src="~/Content/vendors/jquery-ui/jquery-ui.js"></script>
+    <script src="~/Content/vendors/counter-up/jquery.waypoints.min.js"></script>
+    <script src="~/Content/vendors/counter-up/jquery.counterup.js"></script>
+    <script src="~/Content/js/mail-script.js"></script>
+    @*<script src="~/Content/js/theme.js"></script>*@
+
+
+    <script src="~/Scripts/Main/global.js"></script>
+}

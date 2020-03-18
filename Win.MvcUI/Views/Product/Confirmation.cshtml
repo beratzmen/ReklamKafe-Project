@@ -1,0 +1,115 @@
+﻿@*@model Win.Entities.Model.Product*@
+
+@model Win.MvcUI.Models.ConfirmationListViewModel
+
+@{
+    ViewBag.Title = "Onayla | Sepetinizdeki Ürünleri Onaylayın, Hemen Kargolayalım";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<!-- BREADCRUMB -->
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="breadcrumb-header">ADRES BİLGİLERİ</h3>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /BREADCRUMB -->
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+
+
+            <form action="/Product/Confirmation" method="post">
+                @Html.AntiForgeryToken()
+                <div class="col-md-7">
+                    <!-- Billing Details -->
+                    <div class="billing-details">
+                        @*<div class="section-title">
+                                <h3 class="title">Billing address</h3>
+                            </div>*@
+                        <div class="form-group">
+                            <input class="input" type="hidden" name="UserID" value="@Session["userId"]">
+                            <input class="input" type="hidden" name="ProductID" value="@Model.Product.Id">
+                            @*<input class="input" type="hidden" name="ProductID" value="@Session["productId"]">*@
+                        </div>
+                        <div class="form-group">
+                            <label>Ad</label>
+                            <input class="input" type="text" name="Name" value="@(Model.UserAdressInformation == null ? string.Empty : Model.UserAdressInformation.Name)" placeholder="Adınızı Giriniz" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Soyad</label>
+                            <input class="input" type="text" name="Surname" value="@(Model.UserAdressInformation == null ? string.Empty : Model.UserAdressInformation.Surname)" placeholder="Soyadınızı Giriniz" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Adres</label>
+                            <input class="input" type="text" name="Adress" value="@(Model.UserAdressInformation == null ? string.Empty : Model.UserAdressInformation.Adress)" placeholder="Adresinizi Giriniz" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Şehir</label>
+                            <input class="input" type="text" name="City" value="@(Model.UserAdressInformation == null ? string.Empty : Model.UserAdressInformation.City)" placeholder="Şehir Giriniz" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Telefon</label>
+                            <input class="input" type="tel" name="Phone" value="@(Model.UserAdressInformation == null ? string.Empty : Model.UserAdressInformation.Phone)" placeholder="Telefon Giriniz" required maxlength="11">
+                        </div>
+
+                    </div>
+                    <!-- /Billing Details -->
+                    <!-- Order notes -->
+                    <div class="order-notes">
+                        <textarea class="input" name="Note" placeholder="Özel olarak bildirmek istediginiz bir not varsa buraya yazabilirsiniz.">@(Model.UserAdressInformation == null ? string.Empty : Model.UserAdressInformation.Note)</textarea>
+                    </div>
+                    <!-- /Order notes -->
+                </div>
+
+                <!-- Order Details -->
+                <div class="col-md-5 order-details">
+                    <div class="section-title text-center">
+                        <h3 class="title">ÜRÜN BİLGİLERİ</h3>
+                    </div>
+                    <div class="order-summary">
+                        <div class="order-col">
+                            <div><strong>ÜRÜN</strong></div>
+                            <div><strong>TOPLAM</strong></div>
+                        </div>
+                        <div class="order-products">
+                            <div class="order-col">
+                                <div>@Model.Product.Name</div>
+                                <div class="order-total">@Model.Product.Price PUAN</div>
+                            </div>
+                            <div class="order-col">
+                                <div>Kargo</div>
+                                <div><strong>Ücretsiz</strong></div>
+                            </div>
+                        </div>
+
+                        <div class="order-col">
+                            <div><strong>Kalan Puan</strong></div>
+                            <div><strong class="order-total">@((Model.UserInfo.Point < Model.Product.Price) ? "Yeterli puanınız olmadığı için ürünü satın alamazsınız." : (Model.UserInfo.Point - Model.Product.Price).ToString())</strong></div>
+                        </div>
+                    </div>
+                    @*<a href="#" class="primary-btn order-submit">işlemi tamamla</a>*@
+                    <button type="submit" style="pointer-events:@((Model.UserInfo.Point < Model.Product.Price) ? "none" : "auto")" class="primary-btn order-submit">@((Model.UserInfo.Point < Model.Product.Price) ? "İŞLEM TAMAMLANAMAZ" : "İŞLEMİ TAMAMLA")</button>
+                </div>
+                <!-- /Order Details -->
+            </form>
+
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->

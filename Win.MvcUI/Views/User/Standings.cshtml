@@ -1,0 +1,79 @@
+﻿@model List<Win.Entities.Model.UserInfo>
+@{
+    ViewBag.Title = "Puantaj | Tüm Kullanıcılar Arasında Sıranı Al";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-box clearfix">
+                <div class="table-responsive">
+                    <table class="table user-list">
+                        <tbody>
+                            @{
+                                Win.Entities.Model.UserInfo currentUser = null;
+                                if (Session["userId"] != null && !string.IsNullOrEmpty(Session["userId"].ToString()) && !string.IsNullOrWhiteSpace(Session["userId"].ToString()))
+                                {
+                                    currentUser = Model.FirstOrDefault(p => p.Id == int.Parse(Session["userId"].ToString()));
+                                    if (currentUser != null)
+                                    {
+                                        <tr>
+                                            <td style="background-color:antiquewhite">
+                                                <span class="label label-primary" style="font-size:95%">@(Model.IndexOf(currentUser) + 1).</span>
+                                                <img src="@((string.IsNullOrEmpty(currentUser.PhotoUrl)) ? "/Content/images/avatars/avatar0.png" : currentUser.PhotoUrl)" alt="@currentUser.PhotoUrl">
+                                                <a href="#" class="user-link">@currentUser.NickName</a>
+                                                <span class="user-subhead">@currentUser.Title</span>
+                                            </td>
+                                            <td style="background-color:antiquewhite">
+                                                <span class="label label-success" style="font-size:95%">@currentUser.Point PUAN</span>
+                                            </td>
+                                            <td style="background-color:antiquewhite" class="text-center">
+                                                <span class="label label-info" style="font-size:95%">@currentUser.CreatedDate.ToShortDateString() tarihinde katıldı</span>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                foreach (var userInfo in Model)
+                                {
+                                    if (currentUser != null && userInfo.Id == currentUser.Id)
+                                    {
+                                        continue;
+                                    }
+                                    <tr>
+                                        <td>
+                                            <span class="label label-primary" style="font-size:95%">@(Model.IndexOf(userInfo) + 1).</span>
+                                            <img src="@((string.IsNullOrEmpty(userInfo.PhotoUrl)) ? "/Content/images/avatars/avatar0.png" : userInfo.PhotoUrl)" alt="@userInfo.PhotoUrl">
+                                            <a href="#" class="user-link">@userInfo.NickName</a>
+                                            <span class="user-subhead">@userInfo.Title</span>
+                                        </td>
+                                        <td>
+                                            <span class="label label-success" style="font-size:95%">@userInfo.Point PUAN</span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="label label-info" style="font-size:95%">@userInfo.CreatedDate.ToShortDateString() tarihinde katıldı</span>
+                                        </td>
+                                    </tr>
+                                }
+                                if (currentUser != null)
+                                {
+                                    Model.Remove(currentUser);
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @*<ul class="pagination pull-right">
+                        <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
+                    </ul>*@
+            </div>
+        </div>
+    </div>
+</div>

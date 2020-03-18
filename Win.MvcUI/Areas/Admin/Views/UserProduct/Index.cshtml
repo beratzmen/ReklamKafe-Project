@@ -1,0 +1,63 @@
+﻿@model List<Win.Entities.Model.UserProduct>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@Html.AntiForgeryToken()
+
+<!-- page content -->
+<div class="">
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Alınan Ürünlerin Listesi</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Kullanıcı Id</th>
+                                <th>Ürün Id</th>
+                                <th>Durum</th>
+                                <th>Düzenlenme Tarihi</th>
+                                <th>Oluşturulma Tarihi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr style="background-color:@((item.Status == (short)Win.Entities.Enum.ProcessStatus.completed) ? "lightgreen" : "white")">
+                                    <td><a href="#" onclick="location.href='/User/Details/@item.UserID'">Kullanıcıya git</a></td>
+                                    <td><a href="#" onclick="location.href='/Product/Details/@item.ProductID'">Ürüne git</a></td>
+                                    <td>@((Win.Entities.Enum.ProcessStatus)item.Status)</td>
+                                    <td>@item.AuditDate</td>
+                                    <td>@item.CreatedDate</td>
+                                    <td style="background-color:white">
+                                        <a href="@Url.Action("ProcessCompleted","UserProduct",new { id = @item.Id})" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Teslim Edildi </a>
+                                        <a href="/Admin/UserProduct/Delete/@item.Id" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Sil </a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /page content -->

@@ -1,0 +1,35 @@
+﻿@model  Win.Entities.Model.Category
+
+@{
+    ViewBag.Title = "Kategori Güncelle";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<form method="post" action="/Admin/Category/Update" enctype="multipart/form-data" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <input type="hidden" id="first-name" value="@Model.Id" name="Id" required="required" class="form-control col-md-7 col-xs-12">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+            Kategori İsmi : <span class="required">*</span>
+        </label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <input type="text" id="first-name" value="@Model.Name" name="Name" required="required" class="form-control col-md-7 col-xs-12">
+        </div>
+    </div>
+
+    <div class="ln_solid"></div>
+    <div class="form-group">
+        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+            <a href="/Admin/Category/List"><input type="button" class="btn btn-primary" value="Iptal" /></a>
+            <a href=""><input type="submit" class="btn btn-success" value="Kaydet" /></a>
+        </div>
+    </div>
+
+</form>
+

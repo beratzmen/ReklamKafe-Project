@@ -1,0 +1,51 @@
+﻿@model List<Win.Entities.Model.Product>
+
+<div id="store" class="col-md-9">
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-4 col-xs-6">
+                <div class="product">
+                    <div class="product-img">
+                        <img src="@product.Upload1" alt="bedava ürün ücretsiz eşya araç gereç">
+                        <div class="product-label">
+                            <span class="new">@((product.Amount <= 0) ? "TÜKENDİ" : "STOKTA")</span>
+                        </div>
+                    </div>
+                    <div class="product-body">
+                        <h3 class="product-name"><a href="#">@product.Name</a></h3>
+                        <h4 class="product-price">@product.Price PUAN</h4>
+                        <div class="product-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="add-to-cart">
+                        <a href="/Product/Details/@product.Id">
+                            <input type="button" class="add-to-cart-btn" value="detaylı gör" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix visible-sm visible-xs"></div>
+        }
+    </div>
+    <br />
+    <br />
+    <br />
+    <!--
+    <div class="store-filter clearfix">
+        <span class="store-qty">Showing 20-100 products</span>
+        <ul class="store-pagination">
+            <li class="active">1</li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+        </ul>
+    </div>
+    -->
+</div>

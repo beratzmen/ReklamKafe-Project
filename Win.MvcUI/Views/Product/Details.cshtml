@@ -1,0 +1,124 @@
+﻿
+@model Tuple<Win.Entities.Model.Product, List<string>>
+
+@{
+    ViewBag.Title = "Ürün Detayları";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    Session["productId"] = Model.Item1.Id;
+}
+
+
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- Product main img -->
+            <div class="col-md-5 col-md-push-2">
+                <div id="product-main-img">
+                    <div class="product-preview">
+                        <img src="@Model.Item1.Upload1" alt="@Model.Item1.Name">
+                    </div>
+
+                    <div class="product-preview">
+                        <img src="@Model.Item1.Upload2" alt="@Model.Item1.Name">
+                    </div>
+
+                    <div class="product-preview">
+                        <img src="@Model.Item1.Upload3" alt="@Model.Item1.Name">
+                    </div>
+
+                    <div class="product-preview">
+                        <img src="@Model.Item1.Upload3" alt="@Model.Item1.Name">
+                    </div>
+                </div>
+            </div>
+            <!-- /Product main img -->
+            <!-- Product thumb imgs -->
+            <div class="col-md-2  col-md-pull-5">
+                <div id="product-imgs">
+                    <div class="product-preview">
+                        <img src="@Model.Item1.Upload1" alt="@Model.Item1.Name">
+                    </div>
+
+                    <div class="product-preview">
+                        <img src="@Model.Item1.Upload2" alt="@Model.Item1.Name">
+                    </div>
+
+                    <div class="product-preview">
+                        <img src="@Model.Item1.Upload3" alt="@Model.Item1.Name">
+                    </div>
+
+                    @*<div class="product-preview">
+                            <img src="~/Content/img/product08.png" alt="">
+                        </div>*@
+                </div>
+            </div>
+            <!-- /Product thumb imgs -->
+            <!-- Product details -->
+            <div class="col-md-5">
+                <div class="product-details">
+                    <h3 class="title">@Model.Item1.Name</h3>
+                    <h3 class="title">Ürün Satışa @((Model.Item1.IsActive && Model.Item1.Amount > 0) ? " Açık" : " Kapalı")</h3>
+                    <h3 class="title">Stok Miktarı: @Model.Item1.Amount</h3>
+                    <h2 class="product-name">
+                        <span class="product-price"> @Model.Item1.Price   Puan </span>
+                    </h2>
+                    <div class="add-to-cart" style="pointer-events:@((!Model.Item1.IsActive || Model.Item1.Amount <= 0) ? "none" : "auto")">
+                        <button class="add-to-cart-btn" onclick="location.href='@Url.Action("Confirmation", "Product", new { id = @Session["productId"]})'"><i class="fa fa-shopping-cart"></i>Sepete Ekle</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- /Product details -->
+            <!-- Product tab -->
+            <div class="col-md-12">
+                <div id="product-tab">
+                    <!-- product tab nav -->
+                    <ul class="tab-nav">
+                        <li class="active"><a data-toggle="tab" href="#productDescription">Ürün Açıklaması</a></li>
+                        <li><a data-toggle="tab" href="#userProducts">Bu Ürünü Alanlar</a></li>
+                    </ul>
+                    <!-- /product tab nav -->
+                    <!-- product tab content -->
+                    <div class="tab-content">
+                        <div id="productDescription" class="tab-pane fade in active">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>@Html.Raw(Model.Item1.Description)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="userProducts" class="tab-pane fade in">
+                            <div class="row">
+                                @if (Model.Item2 == null || Model.Item2.Count <= 0)
+                                {
+                                    <p>Henüz bu ürünü satın alan yok.</p>
+                                }
+                                else
+                                {
+                                    <div class="col-md-12">
+                                        <p><i><b>@Model.Item2.Count kullanıcımıza bu ürünü kargoladık.</b></i></p>
+                                        @foreach (var userInfo in Model.Item2)
+                                        {
+                                            <p>@userInfo</p>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /product tab content  -->
+                </div>
+            </div>
+            <!-- /product tab -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->

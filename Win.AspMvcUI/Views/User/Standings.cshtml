@@ -1,0 +1,136 @@
+﻿@model List<Win.Entities.Model.UserInfo>
+@{
+    ViewBag.Title = "Puantaj | Tüm Kullanıcılar Arasında Sıranı Al";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!--================Home Banner Area =================-->
+<section class="banner_area">
+    <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+            <div class="banner_content text-center">
+                <h2>Puantaj</h2>
+                <div class="page_link">
+                    <a href="/anasayfa">Anasayfa</a>
+                    <a href="/siralama">Puantaj</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Home Banner Area =================-->
+<!--================Cart Area =================-->
+<section class="cart_area">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Rakiplerinden önce ÜCRETSİZ ürün alabilmek için hemen herhangi bir <strong style="color:#007bff;">reklama tıkla!</strong></th>
+                            <th scope="col">Ünvan</th>
+                            <th scope="col">Puan</th>
+                            <th scope="col">Katılma Tarihi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            Win.Entities.Model.UserInfo currentUser = null;
+                            if (Win.AspMvcUI.Helpers.Session.SessionControl.IsActiveByUser())
+                            {
+                                currentUser = Model.FirstOrDefault(p => p.Id == int.Parse(Session["userId"].ToString()));
+                                if (currentUser != null)
+                                {
+                                    <tr style="background-color:antiquewhite">
+                                        <td class="standingsTableTd">
+                                            <div class="media">
+                                                <div class="d-flex">
+                                                    <img style="width:100px;" src="@((string.IsNullOrEmpty(currentUser.PhotoUrl)) ? "/Content/images/avatars/avatar0.png" : currentUser.PhotoUrl)" alt="@currentUser.PhotoUrl">
+                                                </div>
+                                                <div class="media-body">
+                                                    <h4>@currentUser.NickName</h4>
+                                                    <h5>@(Model.IndexOf(currentUser) + 1). Sırada</h5>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="standingsTableTd">
+                                            <p style="background-color:#4cd3e3;" class="genric-btn medium standingsTableTdP">@currentUser.Title</p>
+                                        </td>
+                                        <td class="standingsTableTd">
+                                            <p style="background-color:#5cb85c;" class="genric-btn medium standingsTableTdP">@currentUser.Point KP</p>
+                                        </td>
+                                        <td class="standingsTableTd">
+                                            <p style="background-color:#f8b600;" class="genric-btn medium standingsTableTdP">@currentUser.CreatedDate.ToShortDateString()</p>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+
+                            foreach (var userInfo in Model)
+                            {
+                                if (currentUser != null && userInfo.Id == currentUser.Id)
+                                {
+                                    continue;
+                                }
+                                <tr>
+                                    <td class="standingsTableTd">
+                                        <div class="media">
+                                            <div class="d-flex">
+                                                <img style="width:100px;" src="@((string.IsNullOrEmpty(userInfo.PhotoUrl)) ? "/Content/images/avatars/avatar0.png" : userInfo.PhotoUrl)" alt="@userInfo.PhotoUrl">
+                                            </div>
+                                            <div class="media-body">
+                                                <h4>@userInfo.NickName</h4>
+                                                <h5>@(Model.IndexOf(userInfo) + 1). Sırada</h5>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="standingsTableTd">
+                                        <p style="background-color:#4cd3e3;" class="genric-btn medium standingsTableTdP">@userInfo.Title</p>
+                                    </td>
+                                    <td class="standingsTableTd">
+                                        <p style="background-color:#5cb85c;" class="genric-btn medium standingsTableTdP">@userInfo.Point KP</p>
+                                    </td>
+                                    <td class="standingsTableTd">
+                                        <p style="background-color:#f8b600;" class="genric-btn medium standingsTableTdP">@userInfo.CreatedDate.ToShortDateString()</p>
+                                    </td>
+                                </tr>
+                            }
+                            if (currentUser != null)
+                            {
+                                Model.Remove(currentUser);
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Cart Area =================-->
+
+
+
+@section JavaScripts{
+    <script src="~/Content/js/SearchScript.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="~/Content/js/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/js/popper.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/stellar.js"></script>
+    <script src="~/Content/vendors/lightbox/simpleLightbox.min.js"></script>
+    <script src="~/Content/vendors/nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="~/Content/vendors/isotope/imagesloaded.pkgd.min.js"></script>
+    <script src="~/Content/vendors/isotope/isotope-min.js"></script>
+    <script src="~/Content/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="~/Content/js/jquery.ajaxchimp.min.js"></script>
+    <script src="~/Content/vendors/jquery-ui/jquery-ui.js"></script>
+    <script src="~/Content/vendors/counter-up/jquery.waypoints.min.js"></script>
+    <script src="~/Content/vendors/counter-up/jquery.counterup.js"></script>
+    <script src="~/Content/js/mail-script.js"></script>
+    <script src="~/Content/js/theme.js"></script>
+
+
+    <script src="~/Scripts/Main/global.js"></script>
+}

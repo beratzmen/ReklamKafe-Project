@@ -1,0 +1,38 @@
+﻿@model Win.Entities.Model.UserInfo
+
+<div id="myCarousel" class="carousel slide" data-interval="false" data-ride="carousel">
+    <div id="divUserPP" class="carousel-inner" style="width:175px; height:175px; margin:auto;">
+        @{
+            string clsName = string.Empty;
+            for (int i = 0; i < 14; i++)
+            {
+                if (i == 0 && string.IsNullOrEmpty(Model.PhotoUrl))
+                {
+                    clsName = "active";
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(Model.PhotoUrl))
+                    {
+                        clsName = (Model.PhotoUrl.Equals("/Content/images/avatars/avatar" + i + ".png")) ? "active" : string.Empty;
+                    }
+                    else
+                    {
+                        clsName = string.Empty;
+                    }
+                }
+                <div data-name="/Content/images/avatars/avatar@(i).png" class="@clsName carousel-item">
+                    <img style="width:175px; height:175px;" class="img-rounded img-responsive" src="~/Content/images/avatars/avatar@(i).png">
+                </div>
+            }
+        }
+    </div>
+    <a class="carousel-control-prev" onclick="GetSelectedUserPP()" href="#myCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" style="background-color:black;" aria-hidden="true"></span>
+        <span class="sr-only">Geri</span>
+    </a>
+    <a class="carousel-control-next" onclick="GetSelectedUserPP()" href="#myCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" style="background-color:black;" aria-hidden="true"></span>
+        <span class="sr-only">İleri</span>
+    </a>
+</div>

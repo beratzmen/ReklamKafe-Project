@@ -1,0 +1,221 @@
+﻿
+@model Tuple<List<Win.Entities.Model.Product>, List<Win.Entities.Model.Product>>
+
+@{
+    ViewBag.Title = "Anasayfa | Çeşitli Ürünler, Kullanışlı Eşyalar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- section title -->
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h3 class="title">Son Eklenenler</h3>
+                </div>
+            </div>
+            <!-- /section title -->
+            <!-- Products tab & slick -->
+            @if (Model != null && Model.Item1 != null)
+            {
+                @Html.Partial("/Views/Partial/_ProductList.cshtml", Model.Item1)
+            }
+            <!-- Products tab & slick -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- section title -->
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h3 class="title">Aktif Ürünler</h3>
+                </div>
+            </div>
+            <!-- /section title -->
+            <!-- Products tab & slick -->
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="products-tabs">
+                        <!-- tab -->
+                        <div id="tab2" class="tab-pane fade in active">
+                            <div class="products-slick" data-nav="#slick-nav-2">
+                                <!-- product -->
+                                @foreach (var lastSoldedProduct in Model.Item2)
+                                {
+                                    <div class="product">
+                                        <div class="product-img">
+                                            <img src="@lastSoldedProduct.Upload1" alt="@lastSoldedProduct.Name">
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a href="#">@lastSoldedProduct.Name</a></h3>
+                                            <h4 class="product-price">@lastSoldedProduct.Price Puan</h4>
+                                            <div class="product-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                        </div>
+                                        <div class="add-to-cart">
+                                            <a href="/Product/Details/@lastSoldedProduct.Id">
+                                                <input type="button" class="add-to-cart-btn" value="detaylı gör" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                }
+                                <!-- /product -->
+                            </div>
+                            <div id="slick-nav-2" class="products-slick-nav"></div>
+                        </div>
+                        <!-- /tab -->
+                    </div>
+                </div>
+            </div>
+            <!-- /Products tab & slick -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+<!-- HOT DEAL SECTION -->
+<div id="hot-deal" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="hot-deal">
+                    <ul class="hot-deal-countdown">
+                        <li>
+                            <div>
+                                <h3 id="day"></h3>
+                                <span>gün</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <h3 id="hour"></h3>
+                                <span>saat</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <h3 id="minute"></h3>
+                                <span>dakika</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <h3 id="second"></h3>
+                                <span>saniye</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <h2 class="text-uppercase">unutmayın!</h2>
+                    <h3>AYIN BAŞINDA HERKESİN PUANI SIFIRLANIR</h3>
+                    <br />
+                    <a class="primary-btn cta-btn" href="/Product/Index">ürünlere göz at</a>
+                </div>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /HOT DEAL SECTION -->
+
+
+@{
+    DateTime firstDayMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1); // Ay ilk günü
+    DateTime lastDayMonth = firstDayMonth.AddMonths(1).AddDays(-1);// Ay son günü
+    var date = lastDayMonth.ToString("yyyy-MM-dd 23:59:59");
+    Session["date"] = date;
+}
+
+<input id="datetime" type="hidden" value="@Session["date"]" />
+@*yukarıda ayın son gününü bulduktan sonra o formatta aşağıdaki scripte yedirmem lazımdı.
+    formatı düzenledikten sonra input'a alaarak input değerini id ile scripte gönderdim ilk aklıma gelen
+    yol bu oldu bir bakmak lazım sonra.'*@
+
+@*<p id="demo"></p>*@
+<script>
+    // Set the date we're counting down to
+    //var countDownDate = new Date("2019-09-01 16:00:00").getTime();
+    var countDownDate = new Date(document.getElementById("datetime").value).getTime();
+
+    // Update the count down every 1 second
+    var x = setInterval(function () {
+
+        // Get today's date and time
+        var now = new Date().getTime();
+
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Output the result in an element with id="demo"
+        //document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+        //    + minutes + "m " + seconds + "s ";
+        //ay sonuna kalan zamanı yazdıgım yer.
+        document.getElementById("day").innerHTML = days;
+        document.getElementById("hour").innerHTML = hours;
+        document.getElementById("minute").innerHTML = minutes;
+        document.getElementById("second").innerHTML = seconds;
+
+
+
+        // If the count down is over, write some text
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("demo").innerHTML = "EXPIRED";
+        }
+    }, 1000);
+</script>
+
+
+<!-- NEWSLETTER -->
+<div id="newsletter" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="newsletter">
+                    <ul class="newsletter-follow">
+                        <li>
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /NEWSLETTER -->

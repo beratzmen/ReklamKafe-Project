@@ -1,0 +1,229 @@
+﻿
+@model Tuple<Win.Entities.Model.Product, List<string>, List<Win.Entities.Dto.ProductCommentsViewModel>, Win.Entities.Model.UserInfo>
+
+
+@{
+    ViewBag.Title = "Ürün Detayları";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--================Home Banner Area =================-->
+<section class="banner_area">
+    <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+            <div class="banner_content text-center">
+                <h2>Ürün Detayları</h2>
+                <div class="page_link">
+                    <a href="@Url.Action("Index","Home")">Anasayfa</a>
+                    <a href="@Url.Action("Index","Product")">Ürünler</a>
+                    <a href="@Url.Action("Details","Product",new { id = Model.Item1.Id})">Ürün Detayları</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Home Banner Area =================-->
+<!--================Single Product Area =================-->
+<div class="product_image_area">
+    <div class="container">
+        <div class="row s_product_inner">
+            <div class="col-lg-6">
+                <div class="s_product_img">
+
+                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active">
+                                <img style="width:60px; height:60px;" src="@Model.Item1.Upload1" alt="">
+                            </li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="1">
+                                <img style="width:60px; height:60px;" src="@Model.Item1.Upload2" alt="">
+                            </li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="2">
+                                <img style="width:60px; height:60px;" src="@Model.Item1.Upload3" alt="">
+                            </li>
+                        </ol>
+
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" style="width:250px;" src="@Model.Item1.Upload1" alt="First slide">
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-block w-100" style="width:250px;" src="@Model.Item1.Upload2" alt="Second slide">
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-block w-100" style="width:250px;" src="@Model.Item1.Upload3" alt="Third slide">
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-5 offset-lg-1">
+                <div class="s_product_text">
+                    <h3>@Model.Item1.Name</h3>
+                    <h2>@Model.Item1.Price RP</h2>
+                    <ul class="list">
+                        @*<li><a class="active" href="#"><span>Category</span> : Household</a></li>*@
+                        <li><a class="active"><span>Ürün Satışı</span> : @((Model.Item1.IsActive && Model.Item1.Amount > 0) ? " Açık" : " Kapalı")</a></li>
+                        <li><a><span>Stok Adeti</span> : @Model.Item1.Amount</a></li>
+                        <li><a><span style="text-align:center"><img src="~/Content/remove_red_eye-24px.svg" /></span>: @Model.Item1.DisplayCount</a></li>
+
+
+                    </ul>
+                    <p>Kargo Ücretsiz</p>
+                    @{
+                        if (Model.Item1.IsActive && Model.Item1.Amount > 0)
+                        {
+                            <div class="product_count">
+                                <label for="qty">Sipariş Adeti:</label>
+                                <input type="number" name="qty" id="sst" maxlength="2" value="1" max="@Model.Item1.Amount" min="1" class="input-text qty">
+                            </div>
+                            <div class="card_area">
+
+                                <a class="main_btn" href="@Url.Action("Checkout","Product",new { id = Model.Item1.Id})">Sepete Ekle</a>
+                                @*<a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>*@
+                                @*<a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>*@
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--================End Single Product Area =================-->
+<!--================Product Description Area =================-->
+<section class="product_description_area">
+    <div class="container">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#description">AÇIKLAMA</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="contact" aria-selected="false">YORUMLAR</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#users">ÜRÜNÜ ALANLAR</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="contact-tab">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="comment_list">
+                            @foreach (var comments in Model.Item3)
+                            {
+                                <div class="review_item">
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            @*<img src="~/Content/img/product/single-product/review-1.png" alt="">*@
+                                            @if (comments.PhotoUrl != null)
+                                            {
+                                                <img src="@comments.PhotoUrl" style="border-radius:30px;width:70px;height:auto;" alt="">
+                                            }
+                                            else
+                                            {
+                                                <img src="~/Content/images/avatars/avatar0.png" style="border-radius:5px;width:70px;height:auto;" alt="">
+                                            }
+                                        </div>
+                                        <div class="media-body">
+                                            <h4>@comments.NickName</h4>
+                                            <h5>@comments.CreatedDate</h5>
+                                        </div>
+                                    </div>
+                                    <p>@comments.Text</p>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        @if (Session["userId"] != null || Session["nickname"] != null)
+                        {
+                            <div class="review_box">
+                                <h4>Yorum Ekle</h4>
+                                <form class="row contact_form" action="/Product/CommentAdd" method="post" id="contactForm" novalidate="novalidate">
+                                    <input type="hidden" value="@Session["userId"]" name="UserId" />
+                                    <input type="hidden" value="@Model.Item1.Id" name="ProductId" />
+                                    @*<div class="col-md-12">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="name" name="NickName" value="@Model.Item4.NickName" placeholder="Your Full name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <input type="email" class="form-control" id="email" name="Email" value="@Model.Item4.Email" placeholder="Email Address">
+                                            </div>
+                                        </div>*@
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <textarea class="form-control" name="Text" id="Text" rows="1" placeholder="Yorumunuzu buraya yazabilirsiniz."></textarea>
+                                        </div>
+                                    </div>
+                                    @*<div class="col-md-12">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="number" name="number" placeholder="Phone Number">
+                                            </div>
+                                        </div>*@
+                                    <div class="col-md-12 text-right">
+                                        <button type="submit" value="submit" class="btn submit_btn">Yorumu Gönder</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="users">
+                <div class="table-responsive">
+                    @if (Model.Item2 == null || Model.Item2.Count <= 0)
+                    {
+                        <h5>Henüz bu ürünü satın alan yok.</h5>
+                    }
+                    else
+                    {
+                        <div class="col-md-12">
+                            <p><i>@Model.Item2.Count kullanıcımıza bu ürünü kargoladık.</i></p>
+                            @foreach (var nickname in Model.Item2)
+                            {
+                                <h5>@nickname</h5>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="tab-pane fade show active" id="description">
+                <p>@Html.Raw(Model.Item1.Description)</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Product Description Area =================-->
+
+
+
+@section JavaScripts{
+    <script src="~/Content/js/SearchScript.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="~/Content/js/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/js/popper.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/stellar.js"></script>
+    <script src="~/Content/vendors/lightbox/simpleLightbox.min.js"></script>
+    <script src="~/Content/vendors/nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="~/Content/vendors/isotope/imagesloaded.pkgd.min.js"></script>
+    <script src="~/Content/vendors/isotope/isotope-min.js"></script>
+    <script src="~/Content/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="~/Content/js/jquery.ajaxchimp.min.js"></script>
+    <script src="~/Content/vendors/jquery-ui/jquery-ui.js"></script>
+    <script src="~/Content/vendors/counter-up/jquery.waypoints.min.js"></script>
+    <script src="~/Content/vendors/counter-up/jquery.counterup.js"></script>
+    <script src="~/Content/js/mail-script.js"></script>
+    <script src="~/Content/js/theme.js"></script>
+
+
+    <script src="~/Scripts/Main/global.js"></script>
+}

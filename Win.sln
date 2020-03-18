@@ -1,0 +1,79 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29123.88
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win.Entities", "Win.Entities\Win.Entities.csproj", "{02CBFD52-0A44-4642-8FE4-2FA48551F2DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win.DataAccess", "Win.DataAccess\Win.DataAccess.csproj", "{395E5861-9181-4490-9B8A-525D62B99749}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win.Business", "Win.Business\Win.Business.csproj", "{BCA5187A-7295-40BC-A55B-11D649E0D949}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win.MvcUI", "Win.MvcUI\Win.MvcUI.csproj", "{D31F1187-4AEA-400F-AFB0-3E2334868CF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win.Helpers", "Win.Helpers\Win.Helpers.csproj", "{454276E2-B835-463A-B2D9-EDA54A40A78A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win.AspMvcUI", "Win.AspMvcUI\Win.AspMvcUI.csproj", "{A34E773E-28BC-48FD-9E00-C8CEF230F5FA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{02CBFD52-0A44-4642-8FE4-2FA48551F2DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02CBFD52-0A44-4642-8FE4-2FA48551F2DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02CBFD52-0A44-4642-8FE4-2FA48551F2DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02CBFD52-0A44-4642-8FE4-2FA48551F2DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{395E5861-9181-4490-9B8A-525D62B99749}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{395E5861-9181-4490-9B8A-525D62B99749}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{395E5861-9181-4490-9B8A-525D62B99749}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{395E5861-9181-4490-9B8A-525D62B99749}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCA5187A-7295-40BC-A55B-11D649E0D949}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCA5187A-7295-40BC-A55B-11D649E0D949}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCA5187A-7295-40BC-A55B-11D649E0D949}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCA5187A-7295-40BC-A55B-11D649E0D949}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D31F1187-4AEA-400F-AFB0-3E2334868CF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D31F1187-4AEA-400F-AFB0-3E2334868CF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D31F1187-4AEA-400F-AFB0-3E2334868CF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D31F1187-4AEA-400F-AFB0-3E2334868CF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{454276E2-B835-463A-B2D9-EDA54A40A78A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{454276E2-B835-463A-B2D9-EDA54A40A78A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{454276E2-B835-463A-B2D9-EDA54A40A78A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{454276E2-B835-463A-B2D9-EDA54A40A78A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A34E773E-28BC-48FD-9E00-C8CEF230F5FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A34E773E-28BC-48FD-9E00-C8CEF230F5FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A34E773E-28BC-48FD-9E00-C8CEF230F5FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A34E773E-28BC-48FD-9E00-C8CEF230F5FA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {947876D8-1C22-47DE-8435-C56EFD8A9BB4}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 7
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://notyetnigga.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Win.Business\\Win.Business.csproj
+		SccProjectName1 = Win.Business
+		SccLocalPath1 = Win.Business
+		SccProjectUniqueName2 = Win.DataAccess\\Win.DataAccess.csproj
+		SccProjectName2 = Win.DataAccess
+		SccLocalPath2 = Win.DataAccess
+		SccProjectUniqueName3 = Win.Entities\\Win.Entities.csproj
+		SccProjectName3 = Win.Entities
+		SccLocalPath3 = Win.Entities
+		SccProjectUniqueName4 = Win.MvcUI\\Win.MvcUI.csproj
+		SccProjectName4 = Win.MvcUI
+		SccLocalPath4 = Win.MvcUI
+		SccProjectUniqueName5 = Win.Helpers\\Win.Helpers.csproj
+		SccProjectName5 = Win.Helpers
+		SccLocalPath5 = Win.Helpers
+		SccProjectUniqueName6 = Win.AspMvcUI\\Win.AspMvcUI.csproj
+		SccProjectName6 = Win.AspMvcUI
+		SccLocalPath6 = Win.AspMvcUI
+	EndGlobalSection
+EndGlobal

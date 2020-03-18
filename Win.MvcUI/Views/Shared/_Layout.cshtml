@@ -1,0 +1,256 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="ücretsiz, ürün, bedava, araç gereç" />
+    <meta name="description" content="Reklam Kafe, size sunulan reklamları izlediğinizde puan kazandırıp ve bu puanlar ile bedava ürün kazanmanızı sağlar." />
+    <meta name="robots" content="all" />
+    <meta name="revisit-after" content="6 days">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>Reklam Kafe | Ücretsiz Ürün Bedava Araç Gereç | @ViewBag.Title</title>
+
+    <!-- Google Adsense -->
+    <script data-ad-client="ca-pub-2717829644533925" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <link rel="icon" href="~/Content/images/logo.png">
+
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link type="text/css" rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
+
+    <!-- Slick -->
+    <link type="text/css" rel="stylesheet" href="~/Content/css/slick.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/css/slick-theme.css" />
+
+    <!-- nouislider -->
+    <link type="text/css" rel="stylesheet" href="~/Content/css/nouislider.min.css" />
+
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="~/Content/css/font-awesome.min.css">
+
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="~/Content/css/style.css" />
+
+    <!-- My Account -->
+    <!-- link adresinden gelen css bilgilerini projeye almamın sebebi, modal ın css lerini etkilemesinden. -->
+    @*<link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">*@
+    <link href="~/Content/css/main/netdna.bootstrapcdn.css" rel="stylesheet" id="bootstrap-css" />
+
+    <!-- Global Css For Project -->
+    <link href="~/Content/css/main/global.css" rel="stylesheet" />
+
+
+
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <!-- TOP HEADER -->
+        <div id="top-header">
+            <div class="container">
+                <ul class="header-links pull-left">
+                    <li><a href="#"><i class="fa fa-envelope-o"></i> destek@reklamkafe.com</a></li>
+                </ul>
+                <ul class="header-links pull-right">
+                    @if (Session["nickname"] == null || string.IsNullOrEmpty(Session["nickname"].ToString()) || string.IsNullOrWhiteSpace(Session["nickname"].ToString()))
+                    {
+                        <li>
+                            <a href="@Url.Action("Login","User")">
+                                <i class="fa fa-user-o"></i> Giriş Yap
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-user-o"></i>@(Session["nickname"] == null ? string.Empty : Session["nickname"])
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("UserInformation","User")"><i class="fa fa-user"></i>Profil</a></li>
+                                <li><a href="@Url.Action("LogOut","User")"><i class="fa fa-power-off"></i>Çıkış Yap</a></li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <!-- /TOP HEADER -->
+        <!-- MAIN HEADER -->
+        <div id="header">
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row">
+                    <!-- LOGO -->
+                    <div class="col-md-3">
+                        <div class="header-logo">
+                            <a href="http://www.reklamkafe.com" class="logo">
+                                <img src="~/Content/images/logo.png" alt="Reklam Kafe Logo">
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /LOGO -->
+                    <!-- ACCOUNT -->
+                    <div class="col-md-3 clearfix">
+                        <div class="header-ctn">
+                            <!-- Menu Toogle -->
+                            <div class="menu-toggle">
+                                <a href="#">
+                                    <i class="fa fa-bars"></i>
+                                    <span>Menu</span>
+                                </a>
+                            </div>
+                            <!-- /Menu Toogle -->
+                        </div>
+                    </div>
+                    <!-- /ACCOUNT -->
+                </div>
+                <!-- row -->
+            </div>
+            <!-- container -->
+        </div>
+        <!-- /MAIN HEADER -->
+    </header>
+    <!-- /HEADER -->
+    <!-- NAVIGATION -->
+    <nav id="navigation">
+        <!-- container -->
+        <div class="container">
+            <!-- responsive-nav -->
+            <div id="responsive-nav">
+                <!-- NAV -->
+                <ul id="ulMainNav" class="main-nav nav navbar-nav">
+                    <li class="liMainNav"><a href="/Home/Index">Ana Sayfa</a></li>
+                    <li class="liMainNav"><a href="/Product/Index">Ürünler</a></li>
+                    <li class="liMainNav"><a href="/User/Standings">Puantaj</a></li>
+                    <li class="liMainNav"><a id="aAdsWatch">Reklam İzle</a></li>
+                    @Html.Partial("/Views/Partial/_AdvertisementModal.cshtml")
+                </ul>
+                <!-- /NAV -->
+            </div>
+            <!-- /responsive-nav -->
+        </div>
+        <!-- /container -->
+    </nav>
+    <!-- /NAVIGATION -->
+    @if (Win.MvcUI.Helpers.Session.SessionControl.IsActiveByUser())
+    {
+        if (!(bool)Session["isAddressEmpty"])
+        {
+            <div class="alert alert-warning">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Dikkat! Adres bilgileriniz tamamlanmamış.</strong> Aldığınız ürünleri kargolayabilmek için adres bilgilerinizi doldurmanız gerekiyor. <a href="/User/UserInformation" class="alert-link">Hesabıma git</a>
+            </div>
+        }
+    }
+    @Html.Partial("/Views/Partial/_StatusModal.cshtml")
+
+    @RenderBody()
+
+    <!-- FOOTER -->
+    <footer id="footer">
+        <!-- top footer -->
+        <div class="section">
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-3 col-xs-6">
+                        <div class="footer">
+                            <h3 class="footer-title">HAKKIMIZDA</h3>
+                            <ul class="footer-links">
+                                <li><a href="@Url.Action("Index","About")">Biz kimiz</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="clearfix visible-xs"></div>
+
+                    <div class="col-md-3 col-xs-6">
+                        <div class="footer">
+                            <h3 class="footer-title">İLETİŞİM</h3>
+                            <ul class="footer-links">
+                                <li><a href="@Url.Action("Index","Contact")">Buradan ulaşabilirsiniz</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="clearfix visible-xs"></div>
+
+                    <div class="col-md-3 col-xs-6">
+                        <div class="footer">
+                            <h3 class="footer-title">BİLGİ</h3>
+                            <ul class="footer-links">
+                                <li><a href="@Url.Action("Privacy","Legal")">Gizlilik Politikası</a></li>
+                                <li><a href="@Url.Action("Conditions","Legal")">Şartlar ve Koşullar</a></li>
+                                <li><a href="@Url.Action("SSS","Legal")">SSS</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-xs-6">
+                        <div class="footer">
+                            <h3 class="footer-title">HESAP</h3>
+                            <ul class="footer-links">
+                                @if (Session["nickname"] == null || string.IsNullOrEmpty(Session["nickname"].ToString()) || string.IsNullOrWhiteSpace(Session["nickname"].ToString()))
+                                {
+                                    <li><a href="@Url.Action("Login","User")">Giriş Yap</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="@Url.Action("UserInformation","User")">Hesabım</a></li>
+                                    <li><a href="@Url.Action("LogOut","User")">Çıkış Yap</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /container -->
+        </div>
+        <!-- /top footer -->
+        <!-- bottom footer -->
+        <div id="bottom-footer" class="section">
+            <div class="container">
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <ul class="footer-payments">
+                            <li><b>Reklam Kafe</b></li>
+                        </ul>
+                        <span class="copyright">
+                            Copyright &copy;
+                            <script>document.write(new Date().getFullYear());</script> Tüm Hakları Saklıdır
+                        </span>
+                    </div>
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /container -->
+        </div>
+        <!-- /bottom footer -->
+    </footer>
+    <!-- /FOOTER -->
+    <!-- Jquery Modal -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+    <!-- Project JS -->
+    <script src="~/Scripts/Main/global.js"></script>
+
+    <!-- jQuery Plugins -->
+    <script src="~/Content/js/jquery.min.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/slick.min.js"></script>
+    <script src="~/Content/js/nouislider.min.js"></script>
+    <script src="~/Content/js/jquery.zoom.min.js"></script>
+    <script src="~/Content/js/main.js"></script>
+
+</body>
+</html>

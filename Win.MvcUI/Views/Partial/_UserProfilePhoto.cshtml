@@ -1,0 +1,49 @@
+﻿@model Win.Entities.Model.UserInfo
+
+<div class="container">
+    <!-- slider -->
+    <div class="row">
+        <div class="col-md-9" id="slider">
+            <!-- Top part of the slider -->
+            <div class="row">
+                <div class="col-md-2" id="carousel-bounding-box">
+                    <div id="myCarousel" class="carousel slide" data-interval="false">
+                        <!-- Carousel items -->
+                        <div id="divUserPP" class="carousel-inner" style="width:150px; height:150px;">
+                            @{
+                                string clsName = string.Empty;
+                                for (int i = 0; i < 14; i++)
+                                {
+                                    if (i == 0 && string.IsNullOrEmpty(Model.PhotoUrl))
+                                    {
+                                        clsName = "active";
+                                    }
+                                    else
+                                    {
+                                        if (!string.IsNullOrEmpty(Model.PhotoUrl))
+                                        {
+                                            clsName = (Model.PhotoUrl.Equals("/Content/images/avatars/avatar" + i + ".png")) ? "active" : string.Empty;
+                                        }
+                                        else
+                                        {
+                                            clsName = string.Empty;
+                                        }
+                                    }
+                                    <div data-name="/Content/images/avatars/avatar@(i).png" class="@clsName item">
+                                        <img class="img-rounded img-responsive" src="~/Content/images/avatars/avatar@(i).png">
+                                    </div>
+                                }
+                            }
+                        </div><!--/carousel-inner-->
+                    </div><!--/carousel-->
+                    <ul class="carousel-controls-mini list-inline text-center">
+                        <li><a onclick="GetSelectedUserPP()" href="#myCarousel" data-slide="prev">‹</a></li>
+                        <li><a onclick="GetSelectedUserPP()" href="#myCarousel" data-slide="next">›</a></li>
+                    </ul><!--/carousel-controls-->
+                </div>
+                <!--/col-->
+                <!--/slide-content-->
+            </div><!--/row-->
+        </div><!--/col-->
+    </div><!--/row slider-->
+</div>

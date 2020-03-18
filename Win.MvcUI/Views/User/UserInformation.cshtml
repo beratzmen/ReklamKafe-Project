@@ -1,0 +1,111 @@
+﻿
+@model Tuple<Win.Entities.Model.UserInfo, Win.Entities.Model.UserAdressInformation, List<Win.Entities.Model.Product>>
+
+@{
+    ViewBag.Title = "Hesabım | Hesap Bilgilerim";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<link href="~/Areas/Admin/Content/build/css/custom.min.css" rel="stylesheet" />*@
+
+<br />
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_content">
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <div class="col-md-12" role="tabpanel" data-example-id="togglable-tabs">
+                        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#tabContentMyAccount" id="account-tab" role="tab" data-toggle="tab" aria-expanded="true">Hesabım</a>
+                            </li>
+                            <li role="presentation" class="">
+                                <a href="#tabContentMyAddressInfo" role="tab" id="address-tab" data-toggle="tab" aria-expanded="false">Adres Bilgilerim</a>
+                            </li>
+                            <li role="presentation" class="">
+                                <a href="#tabContentMyProducts" role="tab" id="myproduct-tab" data-toggle="tab" aria-expanded="false">Aldığım Ürünler</a>
+                            </li>
+                        </ul>
+                        <div id="userTabContent" class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade active in" id="tabContentMyAccount" aria-labelledby="home-tab">
+                                <ul>
+                                    <li>
+                                        <form method="post" action="/User/UserInfoUpdate" enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left">
+                                            @Html.AntiForgeryToken()
+                                            <div class="col-md-12">
+                                                <div class="billing-details">
+                                                    <div class="form-group">
+                                                        <input class="input" type="hidden" name="Id" value="@Model.Item1.Id">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input id="userAccountPP" class="input" type="hidden" name="PhotoUrl" value="@Model.Item1.PhotoUrl">
+                                                        @Html.Partial("/Views/Partial/_UserProfilePhoto.cshtml", new Win.Entities.Model.UserInfo() { PhotoUrl = Model.Item1.PhotoUrl })
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Kullanıcı Adı</label>
+                                                        <input class="input" type="text" value="@Model.Item1.NickName" readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Puan</label>
+                                                        <input class="input" type="text" value="@Model.Item1.Point" readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Şifre</label>
+                                                        <input class="input" type="text" name="Password" maxlength="50" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Email</label>
+                                                        <input class="input" type="email" name="Email" value="@Model.Item1.Email" maxlength="250">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Üyelik Oluşturulma Tarihi</label>
+                                                        <input class="input" type="text" value="@Model.Item1.CreatedDate" readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Son Güncelleme Tarihi</label>
+                                                        <input class="input" type="text" value="@Model.Item1.AuditDate" readonly>
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="primary-btn order-submit">Güncelle</button>
+                                                <br />
+                                                <br />
+                                            </div>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="tabContentMyAddressInfo" aria-labelledby="profile-tab">
+                                <h5>
+                                    <i>*** Bu bilgileri aldığınız ürünleri kargolayabilmek için istiyoruz.</i>
+                                </h5>
+                                @Html.Partial("/Views/Partial/_UserAddress.cshtml", (Model.Item2 == null) ? new Win.Entities.Model.UserAdressInformation() : Model.Item2)
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="tabContentMyProducts" aria-labelledby="profile-tab">
+
+                                <br />
+
+                                <div class="row">
+                                    @if (Model.Item3 == null || Model.Item3.Count <= 0)
+                                    {
+                                        <div class="col-md-3">
+                                            <div class="billing-details">
+                                                <label>Henüz kazandığınız bir ürün bulunmuyor.</label>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        @Html.Partial("/Views/Partial/_ProductList.cshtml", Model.Item3)
+                                    }
+                                </div>
+                                <br />
+                                <br />
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

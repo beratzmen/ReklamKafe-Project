@@ -1,0 +1,235 @@
+﻿
+@model Win.AspMvcUI.Models.MainPageViewModel
+
+@{
+    ViewBag.Title = "Anasayfa | Çeşitli Ürünler, Kullanışlı Eşyalar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<!--================Home Banner Area =================-->
+<section class="home_banner_area">
+    <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+            <div class="banner_content row">
+                <div class="col-lg-5">
+                    <h3>Reklam Kafe</h3>
+                    <p>
+                        Burada <strong>PARA GEÇMEZ!</strong> Sadece puanlar ile alışveriş yapılır. Aldığınız ürüne kargo parası bile <strong>ÖDEMEZSİNİZ.</strong>
+                        Tek yapmanız gereken daha fazla reklam izleyerek diğer kullanıcılardan fazla puan biriktirmek ve stoğa giren
+                        ürünlerimizden dilediğinizi <strong>ÜCRETSİZ</strong> almak.<br /><br />
+                        Amacımız, elde ettiğimiz reklam gelirleri ile siz değerli kullanıcılarımıza ücretsiz olarak ürünler ulaştırabilmektir.
+                    </p>
+                    <a class="white_bg_btn" href="/urunler">Hemen Ürünlere Göz Atın</a>
+                    <br />
+                    <br />
+                </div>
+                <div class="col-lg-7">
+                    <div class="halemet_img">
+                        <img src="~/Content/img/banner/helmat.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Home Banner Area =================-->
+<!--================Feature Product Area =================-->
+<section class="feature_product_area">
+    <div class="main_box">
+        <div class="container">
+            <div class="feature_product_inner">
+                <div class="main_title">
+                    <h2>Satışa Açık Ürünler</h2>
+                    @*<p>Who are in extremely love with eco friendly system.</p>*@
+                </div>
+                <div class="feature_p_slider owl-carousel">
+                    @foreach (var product in Model.products.Item2)
+                    {
+                        <div class="item">
+                            <div class="f_p_item">
+                                <div class="f_p_img">
+                                    <img class="img-fluid" src="@product.Upload1" alt="bedava ürün ücretsiz eşya araç gereç">
+                                    <div class="p_icon">
+                                        @{
+                                            if (product.IsActive && product.Amount > 0)
+                                            {
+                                                <a href="@Url.Action("Checkout","Product",new { id = product.Id})"><i class="lnr lnr-cart"></i></a>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                                <a href="@Url.Action("Details","Product",new { id = product.Id , url =Win.AspMvcUI.Helpers.Util.UrlExtension.FriendlyUrl(product.Name)})"><h4>@product.Name</h4></a>
+                                <h5>@product.Price KP</h5>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Feature Product Area =================-->
+<!--================Deal Timer Area =================-->
+<section class="timer_area">
+    <div class="container">
+        <div class="main_title">
+            <h2>Kalan Zaman</h2>
+            <p>UNUTMAYIN! HER AYIN BAŞINDA HERKESİN PUANI SIFIRLANIR</p>
+            <a class="main_btn" href="@Url.Action("Index","Product")">Hemen Ürünlere Göz At</a>
+        </div>
+        <div class="timer_inner">
+            <div class="timer">
+                <div class="timer__section days">
+                    <div class="timer__number" id="day"></div>
+                    <div class="timer__label">GÜN</div>
+                </div>
+                <div class="timer__section hours">
+                    <div class="timer__number" id="hour"></div>
+                    <div class="timer__label">SAAT</div>
+                </div>
+                <div class="timer__section minutes">
+                    <div class="timer__number" id="minute"></div>
+                    <div class="timer__label">DAKİKA</div>
+                </div>
+                <div class="timer__section seconds">
+                    <div class="timer__number" id="second"></div>
+                    <div class="timer__label">SANİYE</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Deal Timer Area =================-->
+<!--================Latest Product Area =================-->
+<section class="feature_product_area latest_product_area">
+    <div class="main_box">
+        <div class="container">
+            <div class="feature_product_inner">
+                <div class="main_title">
+                    <h2>Son Eklenen Ürünler</h2>
+                    @*<p>Who are in extremely love with eco friendly system.</p>*@
+                </div>
+                @if (Model != null && Model.products != null && Model.products.Item1 != null)
+                {
+                    @Html.Partial("/Views/Partial/_ProductList.cshtml", Model.products.Item1)
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Latest Product Area =================-->
+<!--================Clients Logo Area =================-->
+<section class="clients_logo_area">
+    <div class="container">
+        <div class="main_title">
+            <h2>EN İYİLER</h2>
+            <p>Bu ayın puan sıralamasında ilk 10'a girenler</p>
+        </div>
+        <div class="clients_slider owl-carousel">
+            @foreach (var user in Model.users)
+            {
+                <div class="item">
+                    <span><strong>@user.NickName - @user.Point KP</strong><img style="width:150px;height:150px;border-radius:100px;" src="@((user.PhotoUrl == null) ? "/Content/images/avatars/avatar0.png" : user.PhotoUrl)" alt=""> </span>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<!--================End Clients Logo Area =================-->
+<!--================Most Product Area =================-->
+<section class="most_product_area">
+    <div class="main_box">
+        <div class="container">
+            <div class="main_title">
+                <h2>En Çok Görüntülenen Ürünler</h2>
+                <p>Kullanıcıların dikkatini çeken ürünler</p>
+            </div>
+            <div class="row most_product_inner">
+                @Html.Partial("/Views/Partial/_ProductListSmall.cshtml", Model.products.Item3)
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Most Product Area =================-->
+
+
+
+
+@{
+    DateTime firstDayMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1); // Ay ilk günü
+    DateTime lastDayMonth = firstDayMonth.AddMonths(1).AddDays(-1);// Ay son günü
+    var date = lastDayMonth.ToString("yyyy-MM-dd 23:59:59");
+    Session["date"] = date;
+}
+
+<input id="datetime" type="hidden" value="@Session["date"]" />
+@*yukarıda ayın son gününü bulduktan sonra o formatta aşağıdaki scripte yedirmem lazımdı.
+    formatı düzenledikten sonra input'a alaarak input değerini id ile scripte gönderdim ilk aklıma gelen
+    yol bu oldu bir bakmak lazım sonra.'*@
+
+@*<p id="demo"></p>*@
+<script>
+    // Set the date we're counting down to
+    //var countDownDate = new Date("2019-09-01 16:00:00").getTime();
+    var countDownDate = new Date(document.getElementById("datetime").value).getTime();
+
+    // Update the count down every 1 second
+    var x = setInterval(function () {
+
+        // Get today's date and time
+        var now = new Date().getTime();
+
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Output the result in an element with id="demo"
+        //document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+        //    + minutes + "m " + seconds + "s ";
+        //ay sonuna kalan zamanı yazdıgım yer.
+        document.getElementById("day").innerHTML = days;
+        document.getElementById("hour").innerHTML = hours;
+        document.getElementById("minute").innerHTML = minutes;
+        document.getElementById("second").innerHTML = seconds;
+
+        // If the count down is over, write some text
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("demo").innerHTML = "EXPIRED";
+        }
+    }, 1000);
+</script>
+
+
+
+
+@section JavaScripts{
+    <script src="~/Content/js/SearchScript.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="~/Content/js/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/js/popper.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/stellar.js"></script>
+    <script src="~/Content/vendors/lightbox/simpleLightbox.min.js"></script>
+    <script src="~/Content/vendors/nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="~/Content/vendors/isotope/imagesloaded.pkgd.min.js"></script>
+    <script src="~/Content/vendors/isotope/isotope-min.js"></script>
+    <script src="~/Content/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="~/Content/js/jquery.ajaxchimp.min.js"></script>
+    <script src="~/Content/vendors/jquery-ui/jquery-ui.js"></script>
+    <script src="~/Content/vendors/counter-up/jquery.waypoints.min.js"></script>
+    <script src="~/Content/vendors/counter-up/jquery.counterup.js"></script>
+    <script src="~/Content/js/mail-script.js"></script>
+    <script src="~/Content/js/theme.js"></script>
+
+
+    <script src="~/Scripts/Main/global.js"></script>
+}

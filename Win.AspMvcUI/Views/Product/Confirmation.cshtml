@@ -1,0 +1,128 @@
+﻿@model Win.AspMvcUI.Models.ConfirmationListViewModel
+@{
+    ViewBag.Title = "Siparişiniz Onaylandı";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!--================Home Banner Area =================-->
+<section class="banner_area">
+    <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+            <div class="banner_content text-center">
+                <h2>Siparişiniz Onaylandı</h2>
+                <div class="page_link">
+                    <a href="@Url.Action("Index","Home")">Anasayfa</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Home Banner Area =================-->
+<!--================Order Details Area =================-->
+<section class="order_details p_120">
+    <div class="container">
+        <h3 class="title_confirmation">Teşekkür ederiz, siparişiniz alındı.</h3>
+        <div class="row order_d_inner">
+            <div class="col-lg-6">
+                <div class="details_item">
+                    <h4>Alıcı Bilgileri</h4>
+                    <ul class="list">
+                        <li><a><span>Ad</span> : @Model.UserAdressInformation.Name</a></li>
+                        <li><a><span>Soyad</span> : @Model.UserAdressInformation.Surname</a></li>
+                        <li><a><span>Telefon</span> : @Model.UserAdressInformation.Phone</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="details_item">
+                    <h4>Adres Bilgileri</h4>
+                    <ul class="list">
+                        <li><a><span>Adres</span> : @Model.UserAdressInformation.Adress - @Model.UserAdress.neighborhood / @Model.UserAdress.town</a></li>
+                        <li><a><span>Şehir</span> : @Model.UserAdress.district / @Model.UserAdress.city</a></li>
+                        <li><a><span>Not</span> : @Model.UserAdressInformation.Note</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        @Html.Partial("_OrderTracking", Model.UserProductViewModel)
+
+        <div class="order_details_table">
+            <h2>Sipariş Detayları</h2>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Ürün</th>
+                            <th scope="col"></th>
+                            <th scope="col">Tutar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>@((Model.Product.Name.Length > 100) ? Model.Product.Name.Substring(0, 100) + "..." : Model.Product.Name)</p>
+                            </td>
+                            <td>
+                                <h5></h5>
+                            </td>
+                            <td>
+                                <p>@Model.Product.Price KP</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4>Kargo</h4>
+                            </td>
+                            <td>
+                                <h5></h5>
+                            </td>
+                            <td>
+                                <p>ÜCRETSİZ</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4>Toplam</h4>
+                            </td>
+                            <td>
+                                <h5></h5>
+                            </td>
+                            <td>
+                                <p>@Model.Product.Price KP</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Order Details Area =================-->
+
+
+
+
+@section JavaScripts{
+    <script src="~/Content/js/SearchScript.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="~/Content/js/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/js/popper.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/stellar.js"></script>
+    <script src="~/Content/vendors/lightbox/simpleLightbox.min.js"></script>
+    <script src="~/Content/vendors/nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="~/Content/vendors/isotope/imagesloaded.pkgd.min.js"></script>
+    <script src="~/Content/vendors/isotope/isotope-min.js"></script>
+    <script src="~/Content/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="~/Content/js/jquery.ajaxchimp.min.js"></script>
+    <script src="~/Content/vendors/jquery-ui/jquery-ui.js"></script>
+    <script src="~/Content/vendors/counter-up/jquery.waypoints.min.js"></script>
+    <script src="~/Content/vendors/counter-up/jquery.counterup.js"></script>
+    <script src="~/Content/js/mail-script.js"></script>
+    <script src="~/Content/js/theme.js"></script>
+
+
+    <script src="~/Scripts/Main/global.js"></script>
+}

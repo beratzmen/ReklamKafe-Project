@@ -1,0 +1,41 @@
+﻿@model Win.Entities.Model.UserAdressInformation
+
+<form method="post" action="/User/UserAddressInformationUpdate" enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left">
+    @Html.AntiForgeryToken()
+    <div class="col-md-12">
+        <div class="billing-details">
+            <div class="form-group">
+                <input class="input" type="hidden" name="UserID" value="@Session["userId"]">
+            </div>
+            <div class="form-group">
+                <label>Ad</label>
+                <input class="input" type="text" name="Name" value="@(Model == null ? string.Empty : Model.Name)" placeholder="Ad" required>
+            </div>
+            <div class="form-group">
+                <label>Soyad</label>
+                <input class="input" type="text" name="Surname" value="@(Model == null ? string.Empty : Model.Surname)" placeholder="Soyad" required>
+            </div>
+            <div class="form-group">
+                <label>Adres</label>
+                <input class="input" type="text" name="Adress" value="@(Model == null ? string.Empty : Model.Adress)" placeholder="Adres" required>
+            </div>
+            <div class="form-group">
+                <label>Şehir</label>
+                <input class="input" type="text" name="City" value="@(Model == null ? string.Empty : Model.City)" placeholder="Şehir" required>
+            </div>
+            <div class="form-group">
+                <label>Telefon</label>
+                <input class="input" type="text" name="Phone" value="@(Model == null ? string.Empty : Model.Phone)" placeholder="Telefon" required maxlength="11">
+            </div>
+
+        </div>
+        <div class="order-notes">
+            <textarea class="input" name="Note" placeholder="Özel olarak bildirmek istediginiz bir not varsa buraya yazabilirsiniz.">@(Model == null ? string.Empty : Model.Note)</textarea>
+        </div>
+        <br />
+        <button type="submit" class="primary-btn order-submit">Güncelle</button>
+        <br />
+        <br />
+    </div>
+
+</form>

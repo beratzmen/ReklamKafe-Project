@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{395E5861-9181-4490-9B8A-525D62B99749}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Win.DataAccess</RootNamespace>
+    <AssemblyName>Win.DataAccess</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Abstract\IAdsManagementDal.cs" />
+    <Compile Include="Abstract\IBulletinDal.cs" />
+    <Compile Include="Abstract\ICategoryDal.cs" />
+    <Compile Include="Abstract\ICityDal.cs" />
+    <Compile Include="Abstract\ICommentDal.cs" />
+    <Compile Include="Abstract\IContactDal.cs" />
+    <Compile Include="Abstract\IDistrictDal.cs" />
+    <Compile Include="Abstract\INeighborhoodDal.cs" />
+    <Compile Include="Abstract\IProductCategoryDal.cs" />
+    <Compile Include="Abstract\IProductDal.cs" />
+    <Compile Include="Abstract\ITownDal.cs" />
+    <Compile Include="Abstract\IProductFavoriteDal.cs" />
+    <Compile Include="Abstract\IUserAdressInformationDal.cs" />
+    <Compile Include="Abstract\IUserInfoDal.cs" />
+    <Compile Include="Abstract\IUserProductDal.cs" />
+    <Compile Include="Concrete\EntityFramework\Context\Context.cs" />
+    <Compile Include="Concrete\EntityFramework\Repository\EfAdsManagementRepository.cs" />
+    <Compile Include="Concrete\EntityFramework\Repository\EfBulletinRepository.cs" />
+    <Compile Include="Concrete\EntityFramework\Repository\EfCategoryRepository.cs" />
+    <Compile Include="Concrete\EntityFramework\Repository\EfCityRepository.cs" />
+    <Compile Include="Concrete\EntityFramework\Repository\EfCommentRepository.cs" />
+    <Compile Include="Concrete\EntityFramework\Repository\EfContactRepository.cs" />
+    <Compile Include="Concrete\EntityFramework\Repository\EfDistrictRepository.cs" />
+    <Compile Include="Concrete\EntityFramework\Repository\EfNeighborhoodRepository.cs" />
+    <Compile Include="Concrete\EntityFramework\Repository\EfProductCategoryRepository.cs" />
+    <Compile Include="Concrete\EntityFramework\Repository\EfProductFavoriteRepository.cs" />
+    <Compile Include="Concrete\EntityFramework\Repository\EfProductRepository.cs" />
+    <Compile Include="Concrete\EntityFramework\Repository\EfTownRepository.cs" />
+    <Compile Include="Concrete\EntityFramework\Repository\EfUserAdressInformationRepository.cs" />
+    <Compile Include="Concrete\EntityFramework\Repository\EfUserInfoRepository.cs" />
+    <Compile Include="Concrete\EntityFramework\Repository\EfUserProductRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Win.Entities\Win.Entities.csproj">
+      <Project>{02cbfd52-0a44-4642-8fe4-2fa48551f2dc}</Project>
+      <Name>Win.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Win.Helpers\Win.Helpers.csproj">
+      <Project>{454276E2-B835-463A-B2D9-EDA54A40A78A}</Project>
+      <Name>Win.Helpers</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

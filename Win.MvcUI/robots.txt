@@ -1,0 +1,7 @@
+User-Agent: *
+Allow: 
+Disallow: /Admin
+Disallow: /Error
+Disallow: /Uploads
+
+Sitemap: http://www.reklamkafe.com/sitemap.xml

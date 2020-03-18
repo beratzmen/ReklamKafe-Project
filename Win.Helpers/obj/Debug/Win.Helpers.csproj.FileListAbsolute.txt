@@ -1,0 +1,5 @@
+C:\prj_win\Win\Win.Helpers\bin\Debug\Win.Helpers.dll
+C:\prj_win\Win\Win.Helpers\bin\Debug\Win.Helpers.pdb
+C:\prj_win\Win\Win.Helpers\obj\Debug\Win.Helpers.csprojAssemblyReference.cache
+C:\prj_win\Win\Win.Helpers\obj\Debug\Win.Helpers.dll
+C:\prj_win\Win\Win.Helpers\obj\Debug\Win.Helpers.pdb

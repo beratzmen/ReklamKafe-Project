@@ -1,0 +1,107 @@
+﻿@model Win.AspMvcUI.Models.ConfirmationListViewModel
+
+@{
+    ViewBag.Title = "Sipariş Detayları";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!--================Home Banner Area =================-->
+<section class="banner_area">
+    <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+            <div class="banner_content text-center">
+                <h2>Sipariş Detayları</h2>
+                <div class="page_link">
+                    <a href="@Url.Action("Index","Home")">Anasayfa</a>
+                    <a href="@Url.Action("Checkout","Product",new { id = Model.Product.Id})">Sipariş Detayları</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Home Banner Area =================-->
+<!--================Checkout Area =================-->
+<section class="checkout_area p_120">
+    <div class="container">
+        <div class="billing_details">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h3>Adres</h3>
+                    <form class="row contact_form" method="post">
+                        @Html.AntiForgeryToken()
+                        <input class="form-control" type="hidden" id="hdnUserAddressId" value="@Model.UserAdressInformation.Id">
+                        <input class="form-control" type="hidden" id="hdnProductId" value="@Model.Product.Id">
+                        <div class="col-md-6 form-group">
+                            <input class="form-control" type="text" id="uName" name="Name" value="@(Model.UserAdressInformation == null ? string.Empty : Model.UserAdressInformation.Name)" placeholder="Ad" required>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <input class="form-control" type="text" id="uSurname" name="Surname" value="@(Model.UserAdressInformation == null ? string.Empty : Model.UserAdressInformation.Surname)" placeholder="Soyad" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input class="form-control" type="text" id="uAddress" name="Adress" value="@(Model.UserAdressInformation == null ? string.Empty : Model.UserAdressInformation.Adress)" placeholder="Adres" required>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <input class="form-control" type="text" id="uCity" name="City" value="@(Model.UserAdressInformation == null ? string.Empty : Model.UserAdress.city)" placeholder="Şehir" required>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <input class="form-control" type="text" id="uPhone" name="Phone" value="@(Model.UserAdressInformation == null ? string.Empty : Model.UserAdressInformation.Phone)" placeholder="Telefon" required maxlength="11">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <textarea class="form-control" id="uNote" name="Note" placeholder="Özel olarak bildirmek istediginiz bir not varsa buraya yazabilirsiniz.">@(Model.UserAdressInformation == null ? string.Empty : Model.UserAdressInformation.Note)</textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-4">
+                    <div class="order_box">
+                        <h2>Siparişiniz</h2>
+                        <ul class="list">
+                            <li><a>Ürün <span>Tutar</span></a></li>
+                            <li><a href="@Url.Action("Details","Product", new { id= Model.Product.Id })">@((Model.Product.Name.Length > 20) ? Model.Product.Name.Substring(0, 20) + "..." : Model.Product.Name) <span class="last">@Model.Product.Price KP</span></a></li>
+                        </ul>
+                        <ul class="list list_2">
+                            <li><a>Kargo <span>ÜCRETSİZ</span></a></li>
+                            <li><a>Toplam <span>@Model.Product.Price KP</span></a></li>
+                            <li><a>@((Model.UserInfo.Point < Model.Product.Price) ? "Geçersiz İşlem" : "Kalan Puan ")<span>@((Model.UserInfo.Point < Model.Product.Price) ? "Puanınız yeterli değil." : (Model.UserInfo.Point - Model.Product.Price).ToString())</span></a></li>
+                        </ul>
+                        @if ((Model.UserInfo.Point >= Model.Product.Price))
+                        {
+                            <div class="creat_account">
+                                <input type="checkbox" id="chkTerms" onclick="CheckTerms();" required>
+                                <label for="f-option4">Okudum ve Kabul Ediyorum </label>
+                                <a href="@Url.Action("Conditions","Legal")" target="_blank">Şartlar ve Koşullar*</a>
+                            </div>
+                            <a id="completeOrder" onclick="ProductCheckout()" href="#" class="main_btn btnCompleteOrderDisable">Siparişi Tamamla</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Checkout Area =================-->
+
+
+
+
+@section JavaScripts{
+    <script src="~/Content/js/SearchScript.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="~/Content/js/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/js/popper.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/stellar.js"></script>
+    <script src="~/Content/vendors/lightbox/simpleLightbox.min.js"></script>
+    <script src="~/Content/vendors/nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="~/Content/vendors/isotope/imagesloaded.pkgd.min.js"></script>
+    <script src="~/Content/vendors/isotope/isotope-min.js"></script>
+    <script src="~/Content/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="~/Content/js/jquery.ajaxchimp.min.js"></script>
+    <script src="~/Content/vendors/jquery-ui/jquery-ui.js"></script>
+    <script src="~/Content/vendors/counter-up/jquery.waypoints.min.js"></script>
+    <script src="~/Content/vendors/counter-up/jquery.counterup.js"></script>
+    <script src="~/Content/js/mail-script.js"></script>
+    <script src="~/Content/js/theme.js"></script>
+
+
+    <script src="~/Scripts/Main/global.js"></script>
+}

@@ -1,0 +1,67 @@
+﻿@model  Win.MvcUI.Models.ProductCategoryListViewModel
+
+@{
+    ViewBag.Title = "Ürünler | İşe Yarar Ürünler, Günlük Reklamını İzle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- ASIDE -->
+            <div id="aside" class="col-md-3">
+                <!-- aside Widget -->
+                <div class="aside">
+                    <h3 class="aside-title">Kategoriler</h3>
+                    <div class="checkbox-filter">
+                        @foreach (var item in Model.Category)
+                        {
+                            <div categoryId="@item.Id" class="input-checkbox divCategory">
+                                <input id="@("chkSelectedCategory"+item.Id)" type="checkbox" class="chkCategory" onclick="ProductFiltering()" categoryId="@item.Id">
+                                <label for="@("chkSelectedCategory" + item.Id)">
+                                    <span></span>
+                                    @item.Name
+                                </label>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <!-- /aside Widget -->
+                <!-- aside Widget -->
+                <div class="aside">
+                    <h3 class="aside-title">Puan</h3>
+                    <div class="price-filter">
+                        <div id="price-slider"></div>
+                        <div class="input-number price-min">
+                            <input id="price-min" type="number">
+                            <span class="qty-up">+</span>
+                            <span class="qty-down">-</span>
+                        </div>
+                        <span>-</span>
+                        <div class="input-number price-max">
+                            <input id="price-max" type="number">
+                            <span class="qty-up">+</span>
+                            <span class="qty-down">-</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- /aside Widget -->
+            </div>
+            <!-- /ASIDE -->
+
+            <div id="divProductList">
+                @if (Model != null)
+                {
+                    @Html.Partial("/Views/Partial/_ProductList.cshtml", Model.Product)
+                }
+            </div>
+
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->

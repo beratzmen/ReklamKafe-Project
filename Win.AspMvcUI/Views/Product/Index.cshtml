@@ -1,0 +1,129 @@
+﻿@model Win.AspMvcUI.Models.ProductCategoryListViewModel
+
+@{
+    ViewBag.Title = "Ürünler | İşe Yarar Ürünler, Günlük Reklamını İzle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!--================Home Banner Area =================-->
+<section class="banner_area">
+    <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+            <div class="banner_content text-center">
+                <h2>Ürünler</h2>
+                <div class="page_link">
+                    <a href="@Url.Action("Index","Home")">Anasayfa</a>
+                    <a href="@Url.Action("Index","Product")">Ürünler</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Home Banner Area =================-->
+<!--================Category Product Area =================-->
+<section class="cat_product_area p_120">
+    <div class="container">
+        <div class="row flex-row-reverse">
+            <div class="col-lg-9">
+                <div class="product_top_bar">
+                    <div class="left_dorp">
+                        <select id="selectProductSort" onchange="ProductFiltering()" class="sorting">
+                            <option value="1">Yeniden eskiye</option>
+                            <option value="2">Eskiden yeniye</option>
+                            <option value="3">Azalan puan</option>
+                            <option value="4">Artan puan</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="divProductList">
+                    @if (Model.SearchProduct.Count == 0 || Model.SearchProduct == null)
+                    {
+                        @Html.Partial("/Views/Partial/_ProductList.cshtml", Model.Product)
+                    }
+                    else
+                    {
+                        @Html.Partial("/Views/Partial/_ProductList.cshtml", Model.SearchProduct)
+                    }
+
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="left_sidebar_area">
+                    <aside class="left_widgets cat_widgets">
+                        <div class="l_w_title">
+                            <h3>KATEGORİLER</h3>
+                        </div>
+                        <div class="widgets_inner">
+                            <ul id="ulCategory" class="list">
+                                <li><a style="cursor:pointer" class="selectedCategory" categoryId="0">Tüm Kategoriler</a></li>
+                                @foreach (var item in Model.Category)
+                                {
+                                    <li>
+                                        <a style="cursor:pointer" categoryId="@item.Id">@item.Name</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </aside>
+                    <aside class="left_widgets p_filter_widgets">
+                        <div class="l_w_title">
+                            <h3>FİLTRELER</h3>
+                        </div>
+                        <div class="widgets_inner">
+                            <h4>Puan</h4>
+                            <div class="range_item">
+                                <div id="slider-range"></div>
+                                <div class="row m0">
+                                    <label for="amount">Puan : </label>
+                                    <input type="text" id="amount" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Category Product Area =================-->
+<!--================Most Product Area =================-->
+<section class="most_product_area most_p_withoutbox">
+    <div class="container">
+        <div class="main_title">
+            <h2>En Çok Görüntülenen Ürünler</h2>
+            <p>Kullanıcıların dikkatini çeken ürünler</p>
+        </div>
+        <div class="row most_product_inner">
+            @Html.Partial("/Views/Partial/_ProductListSmall.cshtml", Model.Product)
+        </div>
+    </div>
+</section>
+<!--================End Most Product Area =================-->
+
+
+
+
+@section JavaScripts{
+    <script src="~/Content/js/SearchScript.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="~/Content/js/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/js/popper.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/stellar.js"></script>
+    <script src="~/Content/vendors/lightbox/simpleLightbox.min.js"></script>
+    <script src="~/Content/vendors/nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="~/Content/vendors/isotope/imagesloaded.pkgd.min.js"></script>
+    <script src="~/Content/vendors/isotope/isotope-min.js"></script>
+    <script src="~/Content/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="~/Content/js/jquery.ajaxchimp.min.js"></script>
+    <script src="~/Content/vendors/jquery-ui/jquery-ui.js"></script>
+    <script src="~/Content/vendors/counter-up/jquery.waypoints.min.js"></script>
+    <script src="~/Content/vendors/counter-up/jquery.counterup.js"></script>
+    <script src="~/Content/js/mail-script.js"></script>
+    <script src="~/Content/js/theme.js"></script>
+
+
+    <script src="~/Scripts/Main/global.js"></script>
+}

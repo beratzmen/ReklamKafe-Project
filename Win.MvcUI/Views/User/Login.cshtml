@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewBag.Title = "Reklam Kafe Giriş";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Reklam Kafe Giriş</title>
+
+    <!-- Bootstrap -->
+    <link href="~/Areas/Admin/Content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="~/Areas/Admin/Content/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="~/Areas/Admin/Content/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link href="~/Areas/Admin/Content/vendors/animate.css/animate.min.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="~/Areas/Admin/Content/build/css/custom.min.css" rel="stylesheet">
+
+    <link rel="icon" href="~/Content/images/logo.png">
+
+</head>
+
+<body class="login">
+    <div>
+        <a class="hiddenanchor" id="signup"></a>
+        <a class="hiddenanchor" id="signin"></a>
+
+        <div class="login_wrapper">
+            <div class="animate form login_form">
+                <section class="login_content">
+                    <form method="post" action="/User/UserLogin" enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left">
+
+                        @Html.AntiForgeryToken()
+                        <h1>Giriş Formu</h1>
+                        <div>
+                            <input type="text" class="form-control" name="nickname" maxlength="50" placeholder="Kullanıcı Adı" required="" />
+                        </div>
+                        <div>
+                            <input type="password" class="form-control" name="password" maxlength="50" placeholder="Şifre" required="" />
+                        </div>
+                        <div>
+                            <a class="reset_pass" href="/User/ForgotPassword">Şifremi Unuttum</a>
+                            <a href="#signup" class="reset_pass"> Kayıt Ol </a>
+                            <input type="submit" style="margin-left:20px;" class="btn btn-default submit" value="Giriş Yap" />
+                            @*<a class="btn btn-default submit" href="index.html">Giriş Yap</a>*@
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="separator">
+                            @*<p class="change_link">
+                                    <a href="#signup" class="to_register"> Kayıt Ol </a>
+                                </p>*@
+                            <div class="clearfix"></div>
+                            <br />
+
+                            <div>
+                                <h1>Reklam Kafe </h1>
+                            </div>
+                            <p class="change_link">
+                                <a href="#signup" class="to_register"> Gizlilik ve Kullanım </a>
+                            </p>
+                            <p>@DateTime.Now.Year Tüm Hakları Saklıdır.</p>
+                        </div>
+                    </form>
+                </section>
+            </div>
+
+            <div id="register" class="animate form registration_form">
+                <section class="login_content">
+                    <form method="post" action="/User/Add" enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left">
+                        @Html.AntiForgeryToken()
+                        <h1>Yeni Kayıt Oluştur</h1>
+                        <div>
+                            <input type="text" class="form-control" name="NickName" maxlength="50" placeholder="Kullanıcı Adı" required="required" />
+                        </div>
+                        <div>
+                            <input type="password" class="form-control" name="password" maxlength="50" placeholder="Şifre" required="required" />
+                        </div>
+                        <div>
+                            <input type="submit" style="margin-left:15px;" class="btn btn-default submit" value="Kayıt İşlemini Tamamla" />
+                            <div>
+                                <p class="change_link">
+                                    Zaten üye misiniz? <br />
+                                    <a href="#signin" class="to_register"> Giriş Yap </a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="separator">
+                            <div class="clearfix"></div>
+                            <br />
+
+                            <div>
+                                <h1>Reklam Kafe </h1>
+                            </div>
+                            <p class="change_link">
+                                <a href="#signup" class="to_register"> Gizlilik ve Kullanım </a>
+                            </p>
+                            <p>@DateTime.Now.Year Tüm Hakları Saklıdır.</p>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

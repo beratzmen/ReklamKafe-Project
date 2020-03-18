@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "İletişim | Bize ulaşın";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.AntiForgeryToken()
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-xl-8 offset-xl-2 py-5" style="margin:10px;">
+            <h1>Bizimle iletişime geçin!</h1>
+            <p class="lead">Sizlere daha iyi hizmet verebilmek adına öneri, istek ve şikayetlerinizi bizimle paylaşmanızı rica ederiz.</p>
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="text-muted">
+                        <strong>*</strong> Form üzerinde * işareti görülen yerler zorunlu alanlar olup, bu alanlardaki bilgilerin eksiksiz doldurulması gerekmektedir.
+                    </p>
+                </div>
+            </div>
+            <div>
+                <div class="row">
+                    <div class="col-md-3 col-xs-6">
+                        <div class="form-group">
+                            <label for="contactName">Ad *</label>
+                            <input id="contactName" type="text" name="Name" class="form-control" placeholder="Ad *" maxlength="50" required>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="form-group">
+                            <label for="contactSurname">Soyad *</label>
+                            <input id="contactSurname" type="text" name="Surname" class="form-control" placeholder="Soyad *" maxlength="50" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-xs-6">
+                        <div class="form-group">
+                            <label for="contactEmail">Email *</label>
+                            <input id="contactEmail" type="email" name="Email" class="form-control" placeholder="Email *" maxlength="50" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="contactMessage">Mesaj *</label>
+                            <textarea id="contactMessage" name="Message" class="form-control" placeholder="Mesaj *" rows="4" required></textarea>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <input id="btnSendMail" onclick="SendMail()" type="submit" class="btn btn-success btn-send" value="Gönder">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

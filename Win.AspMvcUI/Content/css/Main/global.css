@@ -1,0 +1,29 @@
+﻿.selectedCategory {
+    text-decoration: underline !important;
+}
+
+.btnCompleteOrderDisable {
+    pointer-events: none;
+    background-color: gray;
+}
+
+.btnCompleteOrderActive {
+    pointer-events: auto;
+}
+
+.standingsTableTd {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+.standingsTableTdP {
+    cursor: default !important;
+    padding: 0 15px !important;
+    width: 90px !important;
+    color: white !important;
+}
+
+.favoriteActive {
+    color: #fff !important;
+    background: #c5322d !important;
+}

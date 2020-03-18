@@ -1,0 +1,29 @@
+﻿
+@model List<Win.Entities.Model.Product>
+
+<div class="latest_product_inner row">
+    @foreach (var product in Model)
+    {
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="f_p_item">
+                <div class="f_p_img">
+                    <img class="img-fluid" src="@product.Upload1" alt="bedava ürün ücretsiz eşya araç gereç">
+                    <div class="p_icon">
+                        @{
+                            if (Win.AspMvcUI.Helpers.Session.SessionControl.IsActiveByUser())
+                            {
+                                <a id="@("lnkFavorite"+product.Id)" onclick="SetProductFavorite(@product.Id)" class="@((Win.AspMvcUI.Helpers.Session.SessionControl.ExistFavoriteByProductId(product.Id))? "favoriteActive":string.Empty)"><i class="lnr lnr-heart"></i></a>
+                            }
+                            if (product.IsActive && product.Amount > 0)
+                            {
+                                <a href="@Url.Action("Checkout","Product",new { id = product.Id})"><i class="lnr lnr-cart"></i></a>
+                            }
+                        }
+                    </div>
+                </div>
+                <a href="@Url.Action("Details","Product",new { id = product.Id , url =Win.AspMvcUI.Helpers.Util.UrlExtension.FriendlyUrl(product.Name)})"><h4>@product.Name</h4></a>
+                <h5>@product.Price KP</h5>
+            </div>
+        </div>
+    }
+</div>

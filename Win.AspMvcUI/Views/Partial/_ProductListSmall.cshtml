@@ -1,0 +1,66 @@
+﻿@model  List<Win.Entities.Model.Product>
+
+<div class="col-lg-3 col-sm-6">
+    @foreach (var product in Model.Take(2))
+    {
+        <div class="most_p_list">
+            <div class="media">
+                <div class="d-flex">
+                    <img style="width:130px" class="img-fluid" src="@product.Upload1" alt="bedava ürün ücretsiz eşya araç gereç">
+                </div>
+                <div class="media-body">
+                    <a href="@Url.Action("Details","Product",new { id = product.Id, url =Win.AspMvcUI.Helpers.Util.UrlExtension.FriendlyUrl(product.Name)})"><h4>@((product.Name.Length > 20) ? product.Name.Substring(0, 20) + "..." : product.Name)</h4></a>
+                    <h3>@product.Price KP</h3>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="col-lg-3 col-sm-6">
+    @foreach (var product in Model.Skip(2).Take(2))
+    {
+        <div class="most_p_list">
+            <div class="media">
+                <div class="d-flex">
+                    <img style="width:130px" class="img-fluid" src="@product.Upload1" alt="bedava ürün ücretsiz eşya araç gereç">
+                </div>
+                <div class="media-body">
+                    <a href="@Url.Action("Details","Product",new { id = product.Id, url =Win.AspMvcUI.Helpers.Util.UrlExtension.FriendlyUrl(product.Name)})"><h4>@((product.Name.Length > 20) ? product.Name.Substring(0, 20) + "..." : product.Name)</h4></a>
+                    <h3>@product.Price KP</h3>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="col-lg-3 col-sm-6">
+    @foreach (var product in Model.Skip(4).Take(2))
+    {
+        <div class="most_p_list">
+            <div class="media">
+                <div class="d-flex">
+                    <img style="width:130px" class="img-fluid" src="@product.Upload1" alt="bedava ürün ücretsiz eşya araç gereç">
+                </div>
+                <div class="media-body">
+                    <a href="@Url.Action("Details","Product",new { id = product.Id, url =Win.AspMvcUI.Helpers.Util.UrlExtension.FriendlyUrl(product.Name)})"><h4>@((product.Name.Length > 20) ? product.Name.Substring(0, 20) + "..." : product.Name)</h4></a>
+                    <h3>@product.Price KP</h3>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="col-lg-3 col-sm-6">
+    @foreach (var product in Model.Skip(6).Take(2))
+    {
+        <div class="most_p_list">
+            <div class="media">
+                <div class="d-flex">
+                    <img style="width:130px" class="img-fluid" src="@product.Upload1" alt="bedava ürün ücretsiz eşya araç gereç">
+                </div>
+                <div class="media-body">
+                    <a href="@Url.Action("Details","Product",new { id = product.Id, url =Win.AspMvcUI.Helpers.Util.UrlExtension.FriendlyUrl(product.Name)})"><h4>@((product.Name.Length > 20) ? product.Name.Substring(0, 20) + "..." : product.Name)</h4></a>
+                    <h3>@product.Price KP</h3>
+                </div>
+            </div>
+        </div>
+    }
+</div>
